@@ -112,7 +112,7 @@ class AppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
-        selectedColor: isDark ? AppColors.primarycolor : AppColors.secondary,
+        selectedColor: isDark ? AppColors.darkBorder : AppColors.secondary,
         backgroundColor: surface,
         side: BorderSide(color: border),
         shape: const StadiumBorder(),
@@ -123,8 +123,8 @@ class AppTheme {
             fontSize: 13,
             fontWeight: FontWeight.w600,
             color: states.contains(WidgetState.selected)
-                ? (isDark ? AppColors.secondary : AppColors.white)
-                : text,
+                ? AppColors.white
+                : (isDark ? AppColors.white : AppColors.secondary),
           ),
         ),
         secondaryLabelStyle: const TextStyle(color: AppColors.white),

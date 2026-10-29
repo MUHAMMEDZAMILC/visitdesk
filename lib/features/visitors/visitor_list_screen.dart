@@ -8,6 +8,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../data/models/visitor.dart';
 import '../../core/utils/snackbar_helper.dart';
 import '../../providers/visitor_provider.dart';
+import '../../widgets/app_filter_chip.dart';
 import '../../widgets/confirm_delete.dart';
 import '../../widgets/empty_state_widget.dart';
 import '../../widgets/error_view.dart';
@@ -128,8 +129,8 @@ class _FilterBar extends StatelessWidget {
           for (final s in VisitorStatus.values)
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.sm),
-              child: FilterChip(
-                label: Text(s.label),
+              child: AppFilterChip(
+                label: s.label,
                 selected: provider.statusFilter == s,
                 onSelected: (sel) => provider.setStatusFilter(sel ? s : null),
               ),
@@ -137,8 +138,8 @@ class _FilterBar extends StatelessWidget {
           for (final pr in VisitorOptions.projects)
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.sm),
-              child: FilterChip(
-                label: Text(pr),
+              child: AppFilterChip(
+                label: pr,
                 selected: provider.projectFilter == pr,
                 onSelected: (sel) => provider.setProjectFilter(sel ? pr : null),
               ),
