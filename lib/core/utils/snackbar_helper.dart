@@ -6,10 +6,10 @@ class SnackbarHelper {
   SnackbarHelper._();
 
   static void success(BuildContext context, String message) =>
-      _show(context, message, AppColors.checkedIn);
+      _show(context, message, AppColors.successGreen);
 
   static void error(BuildContext context, String message) =>
-      _show(context, message, AppColors.error);
+      _show(context, message, AppColors.redPrimary);
 
   static void _show(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context)

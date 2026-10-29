@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'app_fonts.dart';
 import 'app_spacing.dart';
 
 class AppTheme {
@@ -11,30 +12,47 @@ class AppTheme {
 
   static ThemeData _build(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
-    final bg = isDark ? const Color(0xFF10131A) : AppColors.background;
-    final surface = isDark ? const Color(0xFF1B2029) : AppColors.surface;
-    final border = isDark ? const Color(0xFF2C3340) : AppColors.border;
+    final bg = isDark ? AppColors.darkBg : AppColors.scaffoldOffWhite;
+    final surface = isDark ? AppColors.darkSurface : AppColors.white;
+    final border = isDark ? AppColors.darkBorder : AppColors.cardBorder;
+    final text = isDark ? AppColors.white : AppColors.textTitle;
+    final fieldFill = isDark ? AppColors.darkSurface : AppColors.fieldBg;
+
     final scheme = ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
+      seedColor: AppColors.primarycolor,
       brightness: brightness,
+      primary: AppColors.primarycolor,
+      onPrimary: AppColors.secondary,
+      secondary: AppColors.secondary,
       surface: surface,
-      error: AppColors.error,
+      error: AppColors.redPrimary,
     );
-    final inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppSpacing.radius),
-      borderSide: BorderSide(color: border),
+
+    OutlineInputBorder fieldBorder(Color c) => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppSpacing.fieldRadius),
+      borderSide: BorderSide(color: c),
     );
 
     return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
+      fontFamily: AppFonts.liberationSans,
       colorScheme: scheme,
       scaffoldBackgroundColor: bg,
+      textTheme: ThemeData(brightness: brightness).textTheme
+          .apply(bodyColor: text, displayColor: text),
       appBarTheme: AppBarTheme(
         backgroundColor: bg,
-        foregroundColor: isDark ? Colors.white : AppColors.textPrimary,
+        foregroundColor: text,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
+        titleTextStyle: TextStyle(
+          fontFamily: AppFonts.plusJakartaSans,
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: text,
+        ),
       ),
       cardTheme: CardThemeData(
         color: surface,
@@ -47,21 +65,78 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: surface,
-        border: inputBorder,
-        enabledBorder: inputBorder,
-        focusedBorder: inputBorder.copyWith(
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        fillColor: fieldFill,
+        hintStyle: const TextStyle(color: AppColors.fieldHint),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
         ),
-        errorBorder: inputBorder.copyWith(
-          borderSide: const BorderSide(color: AppColors.error),
+        border: fieldBorder(AppColors.transparent),
+        enabledBorder: fieldBorder(AppColors.transparent),
+        focusedBorder: fieldBorder(AppColors.primarycolor),
+        errorBorder: fieldBorder(AppColors.redPrimary),
+        focusedErrorBorder: fieldBorder(AppColors.redPrimary),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isDark
+              ? AppColors.primarycolor
+              : AppColors.secondary,
+          foregroundColor: isDark ? AppColors.secondary : AppColors.white,
+          elevation: 0,
+          minimumSize: const Size(double.infinity, AppSpacing.buttonHeight),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.buttonRadius),
+          ),
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.secondary,
+        indicatorColor: AppColors.mintTint,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (s) => IconThemeData(
+            color: s.contains(WidgetState.selected)
+                ? AppColors.primarycolor
+                : AppColors.white,
+          ),
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (s) => TextStyle(
+            fontFamily: AppFonts.plusJakartaSans,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: s.contains(WidgetState.selected)
+                ? AppColors.primarycolor
+                : AppColors.white,
+          ),
+        ),
+      ),
+      chipTheme: ChipThemeData(
+        selectedColor: isDark ? AppColors.primarycolor : AppColors.secondary,
         backgroundColor: surface,
-        indicatorColor: isDark
-            ? const Color(0xFF2A3A5C)
-            : const Color(0xFFDCE6FA),
+        side: BorderSide(color: border),
+        shape: const StadiumBorder(),
+        showCheckmark: false,
+        labelStyle: WidgetStateTextStyle.resolveWith(
+          (states) => TextStyle(
+            fontFamily: AppFonts.plusJakartaSans,
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: states.contains(WidgetState.selected)
+                ? (isDark ? AppColors.secondary : AppColors.white)
+                : text,
+          ),
+        ),
+        secondaryLabelStyle: const TextStyle(color: AppColors.white),
+      ),
+      dividerColor: border,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: AppColors.primarycolor,
+        foregroundColor: AppColors.secondary,
+        shape: StadiumBorder(),
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppColors.primarycolor,
       ),
     );
   }

@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     final fade = CurvedAnimation(parent: _anim, curve: Curves.easeOut);
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.secondary,
       body: Center(
         child: FadeTransition(
           opacity: fade,
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
                   child: const Icon(
                     Icons.qr_code_2,
                     size: 72,
-                    color: AppColors.primary,
+                    color: AppColors.secondary,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
                   width: 24,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
-                    color: Colors.white,
+                    color: AppColors.primarycolor,
                   ),
                 ),
               ],

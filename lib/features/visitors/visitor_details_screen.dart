@@ -11,7 +11,9 @@ import '../../core/utils/snackbar_helper.dart';
 import '../../data/models/visitor.dart';
 import '../../providers/visitor_provider.dart';
 import '../../widgets/confirm_delete.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/app_button.dart';
+import '../../widgets/app_container.dart';
+import '../../widgets/app_text.dart';
 import '../../widgets/empty_state_widget.dart';
 import '../../widgets/status_chip.dart';
 
@@ -63,7 +65,7 @@ class VisitorDetailsScreen extends StatelessWidget {
           ),
           IconButton(
             tooltip: 'Delete',
-            icon: const Icon(Icons.delete_outline, color: AppColors.error),
+            icon: const Icon(Icons.delete_outline, color: AppColors.redPrimary),
             onPressed: busy
                 ? null
                 : () async {
@@ -79,57 +81,49 @@ class VisitorDetailsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.md),
           child: Column(
             children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              v.name,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+              AppContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AppText.heading(
+                            text: v.name,
+                            size: 20,
+                            maxline: 2,
                           ),
-                          StatusChip(status: v.status),
-                        ],
-                      ),
-                      const Divider(height: AppSpacing.lg),
-                      _row('Mobile', v.mobile),
-                      _row('Email', v.email ?? '—'),
-                      _row('Type', v.visitorType),
-                      _row('Project', v.project),
-                      _row('Purpose', v.purpose),
-                      _row('Registered', DateHelper.format(v.createdAt)),
-                      _row('Check-in', DateHelper.format(v.checkInTime)),
-                      _row('Check-out', DateHelper.format(v.checkOutTime)),
-                    ],
-                  ),
+                        ),
+                        StatusChip(status: v.status),
+                      ],
+                    ),
+                    const Divider(height: AppSpacing.lg),
+                    _row('Mobile', v.mobile),
+                    _row('Email', v.email ?? '—'),
+                    _row('Type', v.visitorType),
+                    _row('Project', v.project),
+                    _row('Purpose', v.purpose),
+                    _row('Registered', DateHelper.format(v.createdAt)),
+                    _row('Check-in', DateHelper.format(v.checkInTime)),
+                    _row('Check-out', DateHelper.format(v.checkOutTime)),
+                  ],
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Column(
-                    children: [
-                      QrImageView(
-                        data: v.id,
-                        size: 200,
-                        backgroundColor: Colors.white,
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Text(
-                        'Visitor ID: ${v.id}',
-                        style: const TextStyle(color: AppColors.textSecondary),
-                      ),
-                    ],
-                  ),
+              AppContainer(
+                child: Column(
+                  children: [
+                    QrImageView(
+                      data: v.id,
+                      size: 200,
+                      backgroundColor: Colors.white,
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    AppText(
+                      text: 'Visitor ID: ${v.id}',
+                      color: AppColors.subtitle,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -148,19 +142,16 @@ class VisitorDetailsScreen extends StatelessWidget {
       children: [
         SizedBox(
           width: 96,
-          child: Text(
-            label,
-            style: const TextStyle(color: AppColors.textSecondary),
-          ),
+          child: AppText(text: label, color: AppColors.subtitle),
         ),
-        Expanded(child: Text(value)),
+        Expanded(child: AppText(text: value, maxline: 3)),
       ],
     ),
   );
 
   Widget _actionButton(BuildContext context, Visitor v, bool busy) {
     if (v.canCheckIn) {
-      return CustomButton(
+      return AppButton(
         label: 'Check In',
         icon: Icons.login,
         isLoading: busy,
@@ -168,13 +159,13 @@ class VisitorDetailsScreen extends StatelessWidget {
       );
     }
     if (v.canCheckOut) {
-      return CustomButton(
+      return AppButton(
         label: 'Check Out',
         icon: Icons.logout,
         isLoading: busy,
         onPressed: () => _act(context, v),
       );
     }
-    return const CustomButton(label: 'Visit completed', onPressed: null);
+    return const AppButton(label: 'Visit completed', onPressed: null);
   }
 }

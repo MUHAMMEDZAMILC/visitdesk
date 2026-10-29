@@ -8,7 +8,8 @@ import '../../core/theme/app_spacing.dart';
 import '../../core/utils/snackbar_helper.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/visitor_provider.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/app_button.dart';
+import '../../widgets/app_text.dart';
 import '../../widgets/dashboard_stat_card.dart';
 import '../../widgets/error_view.dart';
 import '../../widgets/loading_view.dart';
@@ -52,37 +53,37 @@ class DashboardScreen extends StatelessWidget {
                     label: 'Total Visitors Today',
                     value: p.totalToday,
                     icon: Icons.groups,
-                    color: AppColors.registered,
+                    color: AppColors.chillText,
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   DashboardStatCard(
                     label: 'Currently Checked In',
                     value: p.checkedInNow,
                     icon: Icons.login,
-                    color: AppColors.checkedIn,
+                    color: AppColors.successGreen,
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   DashboardStatCard(
                     label: 'Checked Out Today',
                     value: p.checkedOutToday,
                     icon: Icons.logout,
-                    color: AppColors.checkedOut,
+                    color: AppColors.noticeIcon,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  CustomButton(
+                  AppButton(
                     label: 'Register Visitor',
                     icon: Icons.person_add_alt_1,
                     onPressed: () => context.push('/register'),
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  CustomButton(
+                  AppButton(
                     label: 'Scan QR Code',
                     icon: Icons.qr_code_scanner,
                     outlined: true,
                     onPressed: () => context.go('/scan'),
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  CustomButton(
+                  AppButton(
                     label: 'Visitor List',
                     icon: Icons.list_alt,
                     outlined: true,
@@ -113,13 +114,11 @@ class DashboardScreen extends StatelessWidget {
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'VisitDesk',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-            ),
-            Text(
-              'Sumadhura Group · Machine Test',
-              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+            AppText.heading(text: 'VisitDesk', size: 24),
+            AppText(
+              text: 'Sumadhura Group · Machine Test',
+              size: 13,
+              color: AppColors.subtitle,
             ),
           ],
         ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_fonts.dart';
 import '../core/theme/app_spacing.dart';
+import 'app_container.dart';
+import 'app_text.dart';
 
 class DashboardStatCard extends StatelessWidget {
   final String label;
@@ -19,36 +22,31 @@ class DashboardStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: color.withValues(alpha: 0.12),
-              child: Icon(icon, color: color),
+    return AppContainer(
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 24,
+            backgroundColor: color.withValues(alpha: 0.12),
+            child: Icon(icon, color: color),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: AppText(
+              text: label,
+              color: AppColors.subtitle,
+              fontFamily: AppFonts.plusJakartaSans,
+              weight: FontWeight.w500,
             ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Text(
-                label,
-                style: const TextStyle(
-                  color: AppColors.textSecondary,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-            Text(
-              '$value',
-              style: TextStyle(
-                color: color,
-                fontSize: 30,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
+          ),
+          AppText(
+            text: '$value',
+            color: color,
+            size: 30,
+            weight: FontWeight.w700,
+            fontFamily: AppFonts.plusJakartaSans,
+          ),
+        ],
       ),
     );
   }

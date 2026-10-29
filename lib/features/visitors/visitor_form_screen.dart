@@ -10,8 +10,8 @@ import '../../core/utils/snackbar_helper.dart';
 import '../../core/utils/validators.dart';
 import '../../data/models/visitor.dart';
 import '../../providers/visitor_provider.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../widgets/app_button.dart';
+import '../../widgets/app_text_field.dart';
 
 /// Register (visitorId == null) or edit an existing visitor.
 class VisitorFormScreen extends StatefulWidget {
@@ -132,7 +132,7 @@ class _VisitorFormScreenState extends State<VisitorFormScreen> {
             key: _formKey,
             child: Column(
               children: [
-                CustomTextField(
+                AppTextField(
                   controller: _name,
                   label: 'Visitor Name',
                   icon: Icons.person_outline,
@@ -140,7 +140,7 @@ class _VisitorFormScreenState extends State<VisitorFormScreen> {
                   validator: (v) => Validators.required(v, 'Name'),
                 ),
                 const SizedBox(height: AppSpacing.md),
-                CustomTextField(
+                AppTextField(
                   controller: _mobile,
                   label: 'Mobile Number',
                   icon: Icons.phone_outlined,
@@ -150,7 +150,7 @@ class _VisitorFormScreenState extends State<VisitorFormScreen> {
                   validator: Validators.mobile,
                 ),
                 const SizedBox(height: AppSpacing.md),
-                CustomTextField(
+                AppTextField(
                   controller: _email,
                   label: 'Email (optional)',
                   icon: Icons.email_outlined,
@@ -186,7 +186,7 @@ class _VisitorFormScreenState extends State<VisitorFormScreen> {
                   validator: (v) => v == null ? 'Select a project' : null,
                 ),
                 const SizedBox(height: AppSpacing.md),
-                CustomTextField(
+                AppTextField(
                   controller: _purpose,
                   label: 'Purpose of Visit',
                   icon: Icons.notes_outlined,
@@ -195,13 +195,13 @@ class _VisitorFormScreenState extends State<VisitorFormScreen> {
                   validator: (v) => Validators.required(v, 'Purpose'),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                CustomButton(
+                AppButton(
                   label: _isEdit ? 'Save Changes' : 'Register Visitor',
                   isLoading: _saving,
                   onPressed: _save,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                CustomButton(
+                AppButton(
                   label: 'Cancel',
                   outlined: true,
                   onPressed: _saving ? null : () => context.pop(),

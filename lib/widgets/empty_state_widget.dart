@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_spacing.dart';
+import 'app_text.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final IconData icon;
@@ -23,19 +24,20 @@ class EmptyStateWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 64, color: AppColors.textSecondary),
+            Icon(icon, size: 64, color: AppColors.subtitle),
             const SizedBox(height: AppSpacing.md),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            AppText.heading(
+              text: title,
+              textalign: TextAlign.center,
+              maxline: 2,
             ),
             if (subtitle != null) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(
-                subtitle!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: AppColors.textSecondary),
+              AppText(
+                text: subtitle!,
+                textalign: TextAlign.center,
+                color: AppColors.subtitle,
+                maxline: 3,
               ),
             ],
           ],

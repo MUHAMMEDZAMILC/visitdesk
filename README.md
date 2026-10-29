@@ -3,19 +3,19 @@
 Visitor management app for front-desk and security staff (Sumadhura Group machine test).
 Register visitors, search/edit/delete, generate and scan QR codes, check in/out, and see live stats.
 
-- Flutter 3.47.5 / Dart (stable), Android only, package `com.visitdesk.user`
+- Flutter 3.47.5 / Dart (stable), package `com.visitdesk.user`
 
 ## Features
 - Dashboard stats, register/edit/delete, search, QR generation and scanning, check-in/out
 - Bonus: splash screen, filter by status/project, pull-to-refresh, offline cache of the last list, dark mode (toggle on dashboard)
 
 ## Setup
-1. Create a [MockAPI.io](https://mockapi.io) project with a `visitors` resource (fields below) and seed 4–5 records
-   covering all three statuses and different dates.
-2. Set the base URL in `lib/core/config/api_config.dart`, or pass it at run time:
-   `flutter run --dart-define=API_BASE_URL=https://<id>.mockapi.io/api/v1`
-3. `flutter pub get && flutter run`
-4. Release APK: `flutter build apk --release --dart-define=API_BASE_URL=...`
+1. `flutter pub get && flutter run`
+2. No backend needed. Visitors are stored as one JSON file each:
+   `<app documents>/visitdesk_data/visitors/<id>.json`
+   On first launch the folder is seeded from `assets/data/visitors/` (5 sample records). The exact
+   path is printed in the debug console (`VisitDesk data folder: ...`).
+3. iOS: the camera usage description for QR scanning is already in `ios/Runner/Info.plist`.
 
 ### Sample record
 ```json
@@ -26,10 +26,19 @@ Register visitors, search/edit/delete, generate and scan QR codes, check in/out,
   "check_in_time": null, "check_out_time": null
 }
 ```
-The `id` is server generated and is what the QR code encodes.
+The `id` is the file name and is what the QR code encodes.
+
+## Theme
+Matches the GoLoad user app: mint `#00D1A7` primary, navy `#07161E` secondary, off-white background,
+pill buttons and fields, Plus Jakarta Sans for headings/buttons and Liberation Sans for body text.
+Shared widgets: `AppButton`, `AppText`, `AppContainer`, `AppTextField` (in `lib/widgets/`),
+colors in `core/theme/app_colors.dart`.
+
+## Tests
+`flutter test` (unit) and `flutter test integration_test -d <device>` (full walkthrough of every screen).
 
 ## Packages
-provider, dio, go_router, qr_flutter, mobile_scanner, permission_handler, intl, shared_preferences
+provider, path_provider, go_router, qr_flutter, mobile_scanner, permission_handler, intl, shared_preferences
 
 ## State management
 Provider (`ChangeNotifier`): simple, part of the Flutter ecosystem, and enough for this app's scale.
@@ -43,5 +52,4 @@ a per-visitor busy flag ignores double taps.
 
 ## Known limitations
 - One visit per registration; no history.
-- Offline cache is read-only: the last fetched list is shown with a banner, but writes need a connection.
-- Free MockAPI tiers have resource limits; keep the project active during evaluation.
+- Data is local to the device; uninstalling the app removes it.

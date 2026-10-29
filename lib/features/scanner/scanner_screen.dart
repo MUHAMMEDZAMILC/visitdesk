@@ -9,7 +9,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/validators.dart';
 import '../../providers/visitor_provider.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/app_button.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});
@@ -105,7 +105,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               height: 250,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: _error == null ? Colors.white : AppColors.error,
+                  color: _error == null ? Colors.white : AppColors.redPrimary,
                   width: 3,
                 ),
                 borderRadius: BorderRadius.circular(16),
@@ -130,7 +130,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                         children: [
                           const Icon(
                             Icons.error_outline,
-                            color: AppColors.error,
+                            color: AppColors.redPrimary,
                           ),
                           const SizedBox(width: AppSpacing.sm),
                           Expanded(
@@ -144,7 +144,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                         ],
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      CustomButton(
+                      AppButton(
                         label: 'Scan Again',
                         icon: Icons.refresh,
                         onPressed: _resume,
@@ -193,7 +193,7 @@ class _CameraError extends StatelessWidget {
             Icon(
               denied ? Icons.no_photography : Icons.videocam_off,
               size: 64,
-              color: AppColors.textSecondary,
+              color: AppColors.subtitle,
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
@@ -205,7 +205,7 @@ class _CameraError extends StatelessWidget {
             ),
             if (denied) ...[
               const SizedBox(height: AppSpacing.md),
-              CustomButton(
+              AppButton(
                 label: 'Open Settings',
                 icon: Icons.settings,
                 onPressed: openAppSettings,

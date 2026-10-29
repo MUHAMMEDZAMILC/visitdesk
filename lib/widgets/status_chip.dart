@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_fonts.dart';
 import '../data/models/visitor.dart';
 
 class StatusChip extends StatelessWidget {
@@ -9,9 +10,9 @@ class StatusChip extends StatelessWidget {
   const StatusChip({super.key, required this.status});
 
   static Color colorOf(VisitorStatus s) => switch (s) {
-    VisitorStatus.registered => AppColors.registered,
-    VisitorStatus.checkedIn => AppColors.checkedIn,
-    VisitorStatus.checkedOut => AppColors.checkedOut,
+    VisitorStatus.registered => AppColors.chillText,
+    VisitorStatus.checkedIn => AppColors.successGreen,
+    VisitorStatus.checkedOut => AppColors.noticeIcon,
   };
 
   @override
@@ -27,6 +28,7 @@ class StatusChip extends StatelessWidget {
         status.label,
         style: TextStyle(
           color: color,
+          fontFamily: AppFonts.plusJakartaSans,
           fontSize: 12,
           fontWeight: FontWeight.w600,
         ),
